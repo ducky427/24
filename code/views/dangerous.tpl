@@ -9,13 +9,21 @@
 </head>
 <body>
 <div class="container">
-<h1>24 Wiki</h1>
-<ul>
-    <li><a href="/char/">Characters</a></li>
-    <li><a href="/season/">Seasons</a></li>
-    <li><a href="/appearances/10">Top 10 Appearances</a></li>
-    <li><a href="/dangerous/">Most Dangerous Nationalities</a></li>
-</ul>
+<h1>Most Dangerous Nationalities</h1>
+<table class="table">
+    <tr>
+        <th>Country</th>
+        <th># of Kills</th>
+        <th>%</th>
+    </tr>
+    %for d in danger:
+    <tr>
+        <td>{{d['name']}}</td>
+        <td>{{d['num']}}</td>
+        <td>{{d['pct']}}%</td>
+    </tr>
+    %end
+</table>
 </div>
 </body>
 </html>

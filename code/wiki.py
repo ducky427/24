@@ -45,6 +45,36 @@ def season(name):
         return template('season', characters=characters)
 
 
+@get('/appearances/<num>')
+def appearances(num=10):
+    query = """MATCH (c:Character)-[a:APPEARED_IN]->(season)
+                RETURN c.name as name, sum(a.episodes) AS episodes
+                ORDER BY episodes DESC
+                LIMIT %s""" % (num,)
+    return template('top_appearances', num=num, appearances=CypherQuery(graph, query).execute())
+
+
+@get('/dangerous/')
+def dangerous():
+    query = """MATCH (c:Character)-[k:KILLED]->(c2:Character)
+                WHERE has(c2.nationality)
+                RETURN c2.nationality as name, count(c2.nationality) as num
+                ORDER By num desc;"""
+    danger = list(CypherQuery(graph, query).execute())
+    query2 = """MATCH (c:Character)
+                WHERE has(c.nationality)
+                RETURN c.nationality as name, count(c.nationality) as num"""
+    total_num = list(CypherQuery(graph, query2).execute())
+    total_num_dict = {}
+    total = 0
+    for t in total_num:
+        total_num_dict[t.name] = t.num
+    result = []
+    for d in danger:
+        row = dict(name=d.name, num=d.num, pct=100.0*d.num/total_num_dict[d.name])
+        result.append(row)
+    return template('dangerous', danger=result)
+
 @get('/char/<name>')
 def char(name):
     """ Display details of a particular character.

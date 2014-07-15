@@ -9,13 +9,19 @@
 </head>
 <body>
 <div class="container">
-<h1>24 Wiki</h1>
-<ul>
-    <li><a href="/char/">Characters</a></li>
-    <li><a href="/season/">Seasons</a></li>
-    <li><a href="/appearances/10">Top 10 Appearances</a></li>
-    <li><a href="/dangerous/">Most Dangerous Nationalities</a></li>
-</ul>
+<h1>Top {{num}} Appearances</h1>
+<table class="table">
+    <tr>
+        <th>Actor</th>
+        <th>Appearances</th>
+    </tr>
+    %for appearance in appearances:
+    <tr>
+        <td><a href="/char/{{appearance.name}}">{{appearance.name}}</a></td>
+        <td>{{appearance.episodes}}</td>
+    </tr>
+    %end
+</table>
 </div>
 </body>
 </html>
