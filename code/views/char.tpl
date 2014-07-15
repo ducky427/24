@@ -21,7 +21,7 @@
     <dd>
         <ul>
         %for appearance in appearances:
-            <li>{{appearance.end_node["name"]}} ({{appearance["episodes"]}} episodes)</li>
+            <li><a href="/season/{{appearance.end_node["name"]}}">{{appearance.end_node["name"]}} ({{appearance["episodes"]}} episodes)</a></li>
         %end
         </ul>
     </dd>
